@@ -1,49 +1,44 @@
 #include "holberton.h"
+#include <stdio.h>
 #include <stdlib.h>
-
 /**
- * string_nconcat - concatenates two strings.
- * @s1: first string.
- * @s2: second string.
- * @n: amount of bytes.
- *
- * Return: pointer to the allocated memory.
- * if malloc fails, status value is equal to 98.
+ * string_nconcat - concats strings
+ * @s1: string one
+ * @s2: string two
+ * @n: n amount of bytes
+ * Return: return a char val
  */
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
-	char *sout;
-	unsigned int ls1, ls2, lsout, i;
-
-	if (s1 == NULL)
-		s1 = "";
+	unsigned int i, len1, len2;
+	char *s;
 
 	if (s2 == NULL)
 		s2 = "";
+	if (s1 == NULL)
+		s1 = "";
 
-	for (ls1 = 0; s1[ls1] != '\0'; ls1++)
-		;
+	len1 = 0;
+	len2 = 0;
+	while (s2[len2] != '\0')
+		len2++;
+	while (s1[len1] != '\0')
+		len1++;
 
-	for (ls2 = 0; s2[ls2] != '\0'; ls2++)
-		;
+	if (n >= len2)
+		n = len2;
 
-	if (n > ls2)
-		n = ls2;
-
-	lsout = ls1 + n;
-
-	sout = malloc(lsout + 1);
-
-	if (sout == NULL)
+	s = malloc(sizeof(char) * n + len1 + 1);
+	if (s == NULL)
 		return (NULL);
 
-	for (i = 0; i < lsout; i++)
-		if (i < ls1)
-			sout[i] = s1[i];
-		else
-			sout[i] = s2[i - ls1];
+	for (i = 0; i < len1; i++)
+		s[i] = s1[i];
 
-	sout[i] = '\0';
+	for (i = 0; i < n; i++)
+		s[i + len1] = s2[i];
 
-	return (sout);
+	s[i + len1] = '\0';
+
+	return (s);
 }
